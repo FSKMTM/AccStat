@@ -308,7 +308,7 @@
 				Next
 				For i = 1 To count
 					'dist(i) = dist(i - 1) + speedacc(i) * timeInterval / 3.6 'integrate with fixed time interval
-					dist(i) = dist(i - 1) + speedacc(i) * (time(i - 1) - time(i)) / 3.6 'integrate with actual time interval
+					dist(i) = dist(i - 1) + speedacc(i) * (time(i) - time(i - 1)) / 3.6 'integrate with actual time interval
 				Next
 			End If
 			count -= 1
