@@ -303,10 +303,12 @@
 				speedacc(count) = 0
 				dist(0) = 0
 				For i = count - 1 To 0 Step -1
-					speedacc(i) = speedacc(i + 1) - 3.6 * (acc(i) * 9.80665 * timeInterval)
+					'speedacc(i) = speedacc(i + 1) - 3.6 * (acc(i) * 9.80665 * timeInterval) 'integrate with fixed time interval
+					speedacc(i) = speedacc(i + 1) - 3.6 * (acc(i) * 9.80665 * (time(i + 1) - time(i))) 'integrate with actual time interval
 				Next
 				For i = 1 To count
-					dist(i) = dist(i - 1) + speedacc(i) * timeInterval / 3.6
+					'dist(i) = dist(i - 1) + speedacc(i) * timeInterval / 3.6 'integrate with fixed time interval
+					dist(i) = dist(i - 1) + speedacc(i) * (time(i - 1) - time(i)) / 3.6 'integrate with actual time interval
 				Next
 			End If
 			count -= 1
