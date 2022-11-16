@@ -244,53 +244,68 @@
 						If tmparr.Length < 2 Then
 							tmparr = Split(tmpline, " ")
 						End If
-						If tmparr.Length > 8 Then
-							If tmparr.Length > 12 Then
-								'old conskid file
-								time(count) = CDbl(tmparr(0)) / 1000
-								acc(count) = CDbl(tmparr(1))
-								speedacc(count) = 0
-								dist(count) = 0
-								force(count) = 0
-								speedext(count) = 0
-							End If
-							If tmparr.Length = 12 Then
-								'factory VC4000 CSV
-								time(count) = CDbl(tmparr(0))
-								acc(count) = CDbl(tmparr(1))
-								speedacc(count) = CDbl(tmparr(2))
-								dist(count) = CDbl(tmparr(3))
-								force(count) = CDbl(tmparr(5)) * forcefactor
-								speedext(count) = CDbl(tmparr(6))
-							End If
-							If tmparr.Length < 12 Then
-								'old VC2000 file
-								time(count) = CDbl(tmparr(0))
-								acc(count) = CDbl(tmparr(1))
-								speedacc(count) = CDbl(tmparr(2))
-								dist(count) = CDbl(tmparr(3))
-								force(count) = CDbl(tmparr(7)) * forcefactor
-								speedext(count) = CDbl(tmparr(8))
-							End If
-						Else
-							If tmparr.Length = 4 Then
-								'new conskid file
-								integrate = True
-								time(count) = CDbl(tmparr(0)) / 1000
+                        If tmparr.Length > 8 Then
+                            If tmparr.Length > 12 And tmparr.Length < 16 Then
+                                'old conskid file
+                                Debug.Print("old conskid")
+                                time(count) = CDbl(tmparr(0)) / 1000
+                                acc(count) = CDbl(tmparr(1))
+                                speedacc(count) = 0
+                                dist(count) = 0
+                                force(count) = 0
+                                speedext(count) = 0
+                            End If
+                            If tmparr.Length = 12 Then
+                                'factory VC4000 CSV
+                                Debug.Print("VC4000 CSV")
+                                time(count) = CDbl(tmparr(0))
+                                acc(count) = CDbl(tmparr(1))
+                                speedacc(count) = CDbl(tmparr(2))
+                                dist(count) = CDbl(tmparr(3))
+                                force(count) = CDbl(tmparr(5)) * forcefactor
+                                speedext(count) = CDbl(tmparr(6))
+                            End If
+                            If tmparr.Length < 12 Then
+                                'old VC2000 file
+                                Debug.Print("old VC2000")
+                                time(count) = CDbl(tmparr(0))
+                                acc(count) = CDbl(tmparr(1))
+                                speedacc(count) = CDbl(tmparr(2))
+                                dist(count) = CDbl(tmparr(3))
+                                force(count) = CDbl(tmparr(7)) * forcefactor
+                                speedext(count) = CDbl(tmparr(8))
+                            End If
+                            If tmparr.Length > 15 Then
+                                'VC4000 with S1, S7 and GPS
+                                Debug.Print("VC4000 with S1, S7 and GPS")
+                                time(count) = CDbl(tmparr(0))
+                                acc(count) = CDbl(tmparr(1))
+                                speedacc(count) = CDbl(tmparr(2))
+                                dist(count) = CDbl(tmparr(3))
+                                force(count) = CDbl(tmparr(5)) * forcefactor
+                                speedext(count) = CDbl(tmparr(6))
+                            End If
+                        Else
+                            If tmparr.Length = 4 Then
+                                'new conskid file
+                                Debug.Print("new conskid")
+                                integrate = True
+                                time(count) = CDbl(tmparr(0)) / 1000
 								acc(count) = -CDbl(tmparr(1))
 								speedacc(count) = 0
 								dist(count) = 0
 								force(count) = 0
 								speedext(count) = 0
 							Else
-								'new VC4000 CSV or TSV
-								time(count) = CDbl(tmparr(0))
-								acc(count) = CDbl(tmparr(1))
+                                'new VC4000 CSV or TSV
+                                Debug.Print("something else")
+                                time(count) = CDbl(tmparr(0))
+                                acc(count) = CDbl(tmparr(1))
 								speedacc(count) = CDbl(tmparr(2))
 								dist(count) = CDbl(tmparr(3))
-								force(count) = CDbl(tmparr(4)) * forcefactor
-								speedext(count) = CDbl(tmparr(5))
-							End If
+                                force(count) = CDbl(tmparr(5)) * forcefactor
+                                speedext(count) = CDbl(tmparr(6))
+                            End If
 						End If
 						count += 1
 					End If
